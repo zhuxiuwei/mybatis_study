@@ -1,4 +1,5 @@
 import com.xiuwei.POJO.Employee;
+import com.xiuwei.dao.EmployeeMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -10,6 +11,18 @@ import java.io.InputStream;
 
 public class MyTest {
 
+    private SqlSession getSession() throws IOException {
+        /**
+         * 以下四行可封装为工具类
+         * 1. 根据配置文件，创建一个SqlSessionFactory对象
+         */
+        String resources = "mybatis-config.xml";
+        InputStream in = Resources.getResourceAsStream(resources);
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(in);
+//        SqlSession session = sessionFactory.openSession(true);  //true: 自动提交事务
+        //2. 用sqlSession,执行一个已经映射了的sql
+        return sessionFactory.openSession();
+    }
     /**
      * 1、根据xml配置文件（全局配置文件）创建一个SqlSessionFactory对象 有数据源一些运行环境信息
      * 2、sql映射文件；配置了每一个sql，以及sql的封装规则等。
@@ -22,27 +35,33 @@ public class MyTest {
      *
      * @throws IOException
      */
+
+    //对应第一节：helloWorld。
     @Test
     public void helloWorldTest() throws IOException {
-        /**
-         * 以下四行可封装为工具类
-         * 1. 根据配置文件，创建一个SqlSessionFactory对象
-         */
-        String resources = "mybatis-config.xml";
-        InputStream in = Resources.getResourceAsStream(resources);
-        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(in);
-//        SqlSession session = sessionFactory.openSession(true);  //true: 自动提交事务
-
-        //2. 用sqlSession,执行一个已经映射了的sql
-        SqlSession session = sessionFactory.openSession();
         //参数1： sql的唯一标示,即mapper xml里的id。为了避免冲突，建议是namespace.id
         //参数2： 执行sql要用的参数
+        SqlSession session = getSession();
         try {
             Employee employee = session.selectOne("com.xiuwei.mybatis.EmployeeMapper.selectEmp", 1);
             System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
         }finally {
             session.close();
         }
+    }
 
+    //对应第2节：helloWorld - 接口式编程。 比第一节方式更推荐。
+    @Test
+    public void helloWorldTest2_接口式编程() throws IOException {
+        //参数1： sql的唯一标示,即mapper xml里的id。为了避免冲突，建议是namespace.id
+        //参数2： 执行sql要用的参数
+        SqlSession session = getSession();
+        try {
+            EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+            Employee employee = mapper.getEmpById(1);
+            System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
+        }finally {
+            session.close();
+        }
     }
 }

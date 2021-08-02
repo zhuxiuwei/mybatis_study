@@ -2,13 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xiuwei.mybatis.EmployeeMapper">
+<mapper namespace="com.xiuwei.dao.EmployeeMapper">
     <!--
-        第一节，helloWorld。 此方式不如第二节「接口式编程（EmployeeMapper2.xml）」
-        namespace: 命名空间，随便写。不一定是包名。
+        第2节，helloWorld的面向接口编程。 此方式为推荐方式。
+        namespace: 命名空间，这次不随便写了，是包名
         #{id}: 从传过来的参数中去的id值
+        方法id（getEmpById），也和接口EmployeeMapper.java里的方法名一致。
     -->
-    <select id="selectEmp" resultType="com.xiuwei.POJO.Employee">
+    <select id="getEmpById" resultType="com.xiuwei.POJO.Employee">
         <!-- 注意数据库是last_name， javaBean是lastName， 所以sql必须写别名，否则查不出来 -->
         select id, last_name as lastName, email, gender from tbl_employee where id=#{id}
     </select>
