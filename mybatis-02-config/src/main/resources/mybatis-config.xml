@@ -3,14 +3,28 @@
  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<!-- 用于引入外部property配置文件。最多用在数据源的配置上。
+	<!-- 1. 用于引入外部property配置文件。最多用在数据源的配置上。
 	 	 和spring集成后，数据源都由spring很方便配置，这个标签基本也没用了。-->
 	<properties resource="dbconfig.properties" />
 
-	<!-- 这是 MyBatis 中极为重要的调整设置，它们会改变MyBatis 的运行时行为。 -->
+	<!-- 2. 这是 MyBatis 中极为重要的调整设置，它们会改变MyBatis 的运行时行为。 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true"/>
 	</settings>
+
+	<!-- 3. 给Java类起别名，简化书写。 别名不区分大小写 -->
+	<typeAliases>
+		<!--1. 给单独一个类起别名。默认别名：employee，类名(不区分大小写).
+			alias:指定新名 -->
+		<typeAlias type="com.xiuwei.POJO.Employee" alias="emp"/>
+
+		<!-- 2. package: 为某个包下的类批量起别名（适合类很多时）
+			name: 为当前包和下面所有后代包都起一个默认别名（类名(不区分大小写)）
+			-->
+		<package name="com.xiuwei.POJO"/>
+
+		<!-- 3. 如果类名存在冲突（如包和子包都有Employee类），用@Alias注解，为类型指定新的别名。 -->
+	</typeAliases>
 	
 	<environments default="development">
 		<environment id="development">

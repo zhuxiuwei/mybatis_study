@@ -1,5 +1,8 @@
 package com.xiuwei.POJO;
 
+import org.apache.ibatis.type.Alias;
+
+//@Alias("em")    //@Alias: 用于解决别名冲突问题。通过注解给类起别名。
 public class Employee {
     private Integer id;
     private String lastName;
