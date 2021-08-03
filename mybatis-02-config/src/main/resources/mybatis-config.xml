@@ -6,6 +6,12 @@
 	<!-- 用于引入外部property配置文件。最多用在数据源的配置上。
 	 	 和spring集成后，数据源都由spring很方便配置，这个标签基本也没用了。-->
 	<properties resource="dbconfig.properties" />
+
+	<!-- 这是 MyBatis 中极为重要的调整设置，它们会改变MyBatis 的运行时行为。 -->
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+	
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
