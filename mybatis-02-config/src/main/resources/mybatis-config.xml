@@ -66,8 +66,7 @@
 		<property name="Oracle" value="oracle"/>
 	</databaseIdProvider>
 
-	<!-- 5. mappers: 将sql mapper注册到全局配置中。
-	-->
+	<!-- 5. mappers: 将sql mapper注册到全局配置中。 -->
 	<mappers>
 		<!-- mapper:
 			方式1. 注册配置文件：
