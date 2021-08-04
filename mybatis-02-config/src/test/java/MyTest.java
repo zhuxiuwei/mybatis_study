@@ -1,5 +1,6 @@
 import com.xiuwei.POJO.Employee;
 import com.xiuwei.dao.EmployeeMapper;
+import com.xiuwei.dao.EmployeeMapperAnnotation;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -25,6 +26,18 @@ public class MyTest {
         try {
             EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
             Employee employee = mapper.getEmpById(1);
+            System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
+        }finally {
+            session.close();
+        }
+    }
+
+    @Test
+    public void test_基于注解的mapper() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperAnnotation sessionMapper = session.getMapper(EmployeeMapperAnnotation.class); //注解类的class
+            Employee employee = sessionMapper.getEmpById(1);
             System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
         }finally {
             session.close();

@@ -75,12 +75,18 @@
 			url: 引用网络路径或磁盘路径下的sql mapper文件
 
 			方式2. 注册接口：
-			class: 接口(狂神spring5 mybatis集成的例子就是注册的接口)。 几个实现方式:
+			class: 接口(狂神spring5 "mybatis集成"的例子就是注册的接口)。 几个实现方式:
 				1、有mapper文件，必须和接口同名，而且必须放到与接口(.java)同一目录下
 				2、没有mapper文件，所有的sql都是利用注解写接口上（例子：）
+			建议：
+				1. 重要的、复杂的DAO接口，用mapper文件； （毕竟mybatis的初衷就是sql和java源码分离）
+				2. 不重要的、简单地接口，可以用注解。
 		-->
-		<mapper resource="EmployeeMapper2.xml" />
-		<mapper class="com.xiuwei.dao.EmployeeMapperAnnotation" />
+		<!-- <mapper resource="EmployeeMapper2.xml" /> -->	<!-- 方式1. 注册配置文件 -->
+		<!-- <mapper class="com.xiuwei.dao.EmployeeMapperAnnotation" />  --> <!-- 基于注解的 -->
+
+		<!-- 批量注册. 也可以。注意mapper文件方式想生效，mapper文件得和接口同名，而且必须放到与接口目录。 -->
+		<package name="com.xiuwei.dao"/>
 	</mappers>
 
 </configuration>
