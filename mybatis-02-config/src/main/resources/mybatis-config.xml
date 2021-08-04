@@ -25,8 +25,26 @@
 
 		<!-- 3. 如果类名存在冲突（如包和子包都有Employee类），用@Alias注解，为类型指定新的别名。 -->
 	</typeAliases>
-	
+
+	<!-- 4. Mybatis可以配置多个环境信息。 default指定使用哪个环境，达到快速切换。 （结合Spring后主要用Spring的，这里了解即可。）
+		 environment必须有2个标签：
+			transactionManager：配置事务管理器，type为类型，支持2种：JDBC(JDBC的commit/rollback, JDBCTransactionFactory) | MANAGED(容器的 ManagedTransactionFactory)。
+				自定义事务管理器，实现TransactionFactory接口。type指定全类名。
+
+			DataSource: 数据源；
+				type: 数据源类型，POOLED | UNPOOLED | JNDI (这三个也是具体三个类的别名 xxxDataSourceFactory)
+				自定义数据源：实现DataSourceFactory接口 。type指定全类名。
+	-->
 	<environments default="development">
+		<environment id="test">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}"/>
+				<property name="username" value="${jdbc.username}"/>
+				<property name="password" value="${jdbc.password}"/>
+			</dataSource>
+		</environment>
 		<environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
@@ -37,7 +55,32 @@
 			</dataSource>
 		</environment>
 	</environments>
+
+	<!-- 5. databaseIdProvider: 支持多数据库厂商
+		type="DB_VENDOR": VendorDatabaseIdProvider
+			作用就是得到数据库厂商标识（MySQL, Oracle, SQL Server等）。mybatis能根据数据库厂商标识来执行不同sql。
+	-->
+	<databaseIdProvider type="DB_VENDOR">
+		<!-- 为不同的数据库厂商起别名 -->
+		<property name="MySQL" value="mysql"/>
+		<property name="Oracle" value="oracle"/>
+	</databaseIdProvider>
+
+	<!-- 5. mappers: 将sql mapper注册到全局配置中。
+	-->
 	<mappers>
+		<!-- mapper:
+			方式1. 注册配置文件：
+			resource: 引用类路径下的sql mapper文件
+			url: 引用网络路径或磁盘路径下的sql mapper文件
+
+			方式2. 注册接口：
+			class: 接口(狂神spring5 mybatis集成的例子就是注册的接口)。 几个实现方式:
+				1、有mapper文件，必须和接口同名，而且必须放到与接口(.java)同一目录下
+				2、没有mapper文件，所有的sql都是利用注解写接口上（例子：）
+		-->
 		<mapper resource="EmployeeMapper2.xml" />
+		<mapper class="com.xiuwei.dao.EmployeeMapperAnnotation" />
 	</mappers>
+
 </configuration>

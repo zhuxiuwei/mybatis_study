@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiuwei.dao.EmployeeMapper">
     <!-- 配置文件里，设置了typeAlias，所以resultType可以简写 -->
-    <select id="getEmpById" resultType="emp">
+    <select id="getEmpById" resultType="emp" databaseId="mysql">
         <!-- 配置文件里设置了<setting name="mapUnderscoreToCamelCase" value="true"/>，可以写select *了，不用写last_name as lastName  -->
         select * from tbl_employee where id=#{id}
     </select>
