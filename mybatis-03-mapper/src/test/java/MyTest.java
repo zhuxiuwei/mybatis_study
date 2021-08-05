@@ -31,13 +31,14 @@ public class MyTest {
             System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
 
             //测试添加
-//            Employee employee1 = new Employee(null, "jerry", "1", "jerry@qq.com");  //自增id，所以id设置Null
-//            mapper.addEmp(employee1);
+            Employee employee1 = new Employee(null, "jerry", "1", "jerry@qq.com");  //自增id，所以id设置Null
+            mapper.addEmp(employee1);
+            System.out.println(employee1.getId());  //如果mapper的insert标签里配置了useGeneratedKeys="true" keyProperty="id"，就能正确获取插入后的自增id
 
             //测试修改
-            Employee employee1 = new Employee(3, "jerry_update3", "1", "jerry_update@qq.com");  //修改id=3的记录
-            boolean succeed = mapper.updateEmp(employee1);
-            System.out.println(succeed);
+//            Employee employee1 = new Employee(3, "jerry_update3", "1", "jerry_update@qq.com");  //修改id=3的记录
+//            boolean succeed = mapper.updateEmp(employee1);
+//            System.out.println(succeed);
 
             //测试删除
 //            mapper.deleteEmp(4);
