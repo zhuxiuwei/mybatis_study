@@ -16,6 +16,7 @@ public interface EmployeeMapper {
     Boolean updateEmp(Employee employee);
     Integer deleteEmp(Integer id);
 
+    //传参测试 - map, pojo
     Employee getEmpByMap(Map<String, Object> argsMap);
     Employee getEmpByPojo(Employee employee);
 

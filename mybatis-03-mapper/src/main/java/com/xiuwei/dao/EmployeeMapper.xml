@@ -30,7 +30,7 @@
 
     <!-- 参数是map时 -->
     <select id="getEmpByMap" resultType="com.xiuwei.POJO.Employee">
-        select * from tbl_employee where id=#{id} and last_name=#{lName}
+        select * from #{tableName} where id=#{id} and last_name=#{lName}
     </select>
 
     <!-- 参数是POJO时 -->

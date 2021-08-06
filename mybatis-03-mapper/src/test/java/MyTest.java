@@ -63,6 +63,7 @@ public class MyTest {
             args.put("id", 1);
             args.put("lName", "tom");   //注意，lName和mapper里 "#{lName}" 写法一致
             args.put("foo", "bar");     //无效参数，不影响结果
+            args.put("tableName", "tbl_employee");  /** 用于测试 #{}取值与 ${}取值的区别。 */
 
             Employee employee = mapper.getEmpByMap(args);
             System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
