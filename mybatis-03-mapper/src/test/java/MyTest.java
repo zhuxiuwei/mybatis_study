@@ -53,6 +53,19 @@ public class MyTest {
         }
     }
 
+    //传参 - param测试
+    @Test
+    public void testSelectByParam() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+            Employee employee = mapper.getEmpByParams(1, "tom", "0");
+            System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
+        }finally {
+            session.close();
+        }
+    }
+
     //传参 - map时
     @Test
     public void testSelectByMap() throws IOException {

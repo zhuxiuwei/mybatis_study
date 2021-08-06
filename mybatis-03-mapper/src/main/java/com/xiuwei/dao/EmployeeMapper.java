@@ -1,6 +1,7 @@
 package com.xiuwei.dao;
 
 import com.xiuwei.POJO.Employee;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
 
@@ -16,7 +17,8 @@ public interface EmployeeMapper {
     Boolean updateEmp(Employee employee);
     Integer deleteEmp(Integer id);
 
-    //传参测试 - map, pojo
+    //传参测试 - param, map, pojo
+    Employee getEmpByParams(@Param("id") Integer id, @Param("lName") String lastName, String gender);
     Employee getEmpByMap(Map<String, Object> argsMap);
     Employee getEmpByPojo(Employee employee);
 

@@ -28,6 +28,11 @@
         delete from tbl_employee where id=#{id}
     </delete>
 
+    <!-- 通过params取值，以及测试接口里的@param用法 -->
+    <select id="getEmpByParams" resultType="com.xiuwei.POJO.Employee">
+        select * from tbl_employee where id=#{id} and last_name=#{lName} and gender=${param3}
+    </select>
+
     <!-- 参数是map时 -->
     <select id="getEmpByMap" resultType="com.xiuwei.POJO.Employee">
         select * from #{tableName} where id=#{id} and last_name=#{lName}
