@@ -2,6 +2,8 @@ package com.xiuwei.dao;
 
 import com.xiuwei.POJO.Employee;
 
+import java.util.Map;
+
 public interface EmployeeMapper {
 
     /**
@@ -13,4 +15,8 @@ public interface EmployeeMapper {
     Long addEmp(Employee employee);
     Boolean updateEmp(Employee employee);
     Integer deleteEmp(Integer id);
+
+    Employee getEmpByMap(Map<String, Object> argsMap);
+    Employee getEmpByPojo(Employee employee);
+
 }

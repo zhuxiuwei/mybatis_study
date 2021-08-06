@@ -27,4 +27,14 @@
     <delete id="deleteEmp">
         delete from tbl_employee where id=#{id}
     </delete>
+
+    <!-- 参数是map时 -->
+    <select id="getEmpByMap" resultType="com.xiuwei.POJO.Employee">
+        select * from tbl_employee where id=#{id} and last_name=#{lName}
+    </select>
+
+    <!-- 参数是POJO时 -->
+    <select id="getEmpByPojo" resultType="com.xiuwei.POJO.Employee">
+        select * from tbl_employee where id=#{id} and last_name=#{lastName}
+    </select>
 </mapper>

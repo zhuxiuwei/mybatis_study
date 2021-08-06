@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyTest {
 
@@ -46,6 +48,38 @@ public class MyTest {
             //2. 手动提交
             session.commit();
 
+        }finally {
+            session.close();
+        }
+    }
+
+    //传参 - map时
+    @Test
+    public void testSelectByMap() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+            Map<String, Object> args = new HashMap<String, Object>();
+            args.put("id", 1);
+            args.put("lName", "tom");   //注意，lName和mapper里 "#{lName}" 写法一致
+            args.put("foo", "bar");     //无效参数，不影响结果
+
+            Employee employee = mapper.getEmpByMap(args);
+            System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
+        }finally {
+            session.close();
+        }
+    }
+
+    //传参 - pojo时
+    @Test
+    public void testSelectByPOJO() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+            Employee employee = new Employee(1, "Tom", "Foo", "Bar");
+            Employee res = mapper.getEmpByPojo(employee);
+            System.out.println(res);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com'}
         }finally {
             session.close();
         }
