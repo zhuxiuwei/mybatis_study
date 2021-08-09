@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiuwei.dao.EmployeeMapperPlus">
+
+    <!-- 自定义某个javabean的封装规则-->
+    <resultMap id="myEmp" type="com.xiuwei.POJO.Employee">
+        <!-- 定义主键列的封装规则。 column: 制订db里的列。  property: 制订javebean的属性
+            id定义主键，底层会有优化。-->
+        <id column="id" property="id" />
+        <!-- 定义普通列的封装规则 -->
+        <result column="last_name" property="lastName" />
+        <!-- 其他不指定的列会自动封装。 但是作者建议，一旦用了resultMap，其他列的映射也都写上，避免出错。 -->
+        <result column="email" property="email" />
+        <result column="gender" property="gender" />
+    </resultMap>
+
+    <!-- resultMap：自定义结果集映射。（用了这个就不能用resultType了）-->
+    <select id="getEmpById" resultMap="myEmp">
+        select * from tbl_employee where id=#{id}
+    </select>
+</mapper>
