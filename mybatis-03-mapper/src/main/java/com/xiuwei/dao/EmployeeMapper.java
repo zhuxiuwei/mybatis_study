@@ -1,6 +1,7 @@
 package com.xiuwei.dao;
 
 import com.xiuwei.POJO.Employee;
+import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Map;
@@ -21,5 +22,13 @@ public interface EmployeeMapper {
     Employee getEmpByParams(@Param("id") Integer id, @Param("lName") String lastName, String gender);
     Employee getEmpByMap(Map<String, Object> argsMap);
     Employee getEmpByPojo(Employee employee);
+
+    //返回 一条记录 的map
+    Map<String, Object> getEmpByIdReturnMap(Integer id);
+
+    //返回 多条记录 的map。 key: id， value: employee javebean
+    @MapKey("id")  //告诉Mybatis 封装map时，使用哪个属性 作为主键。
+    Map<Integer, Employee> getEmpsByLikeLastNameReturnMap(@Param("lastName") String lastName);
+
 
 }

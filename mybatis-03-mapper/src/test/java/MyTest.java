@@ -98,4 +98,22 @@ public class MyTest {
             session.close();
         }
     }
+
+    //返回map的测试
+    @Test
+    public void testSelectReturnMap() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+            //一条map
+            Map<String, Object> res = mapper.getEmpByIdReturnMap(1);
+            System.out.println(res);   //{gender=0, last_name=tom, id=1, email=tom@126.com}
+
+            //返回 多条记录 的map。 key: id， value: employee javebean
+            Map<Integer, Employee> res2 = mapper.getEmpsByLikeLastNameReturnMap("%jer%");   //注意还没有找到like的百分号，在mapper sql里写的正确方式，所以百分号写这了。
+            System.out.println(res2);   //{gender=0, last_name=tom, id=1, em
+        }finally {
+            session.close();
+        }
+    }
 }
