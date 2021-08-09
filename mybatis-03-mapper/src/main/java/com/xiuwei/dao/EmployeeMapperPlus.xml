@@ -55,5 +55,4 @@
         where emp.id=#{id}
     </select>
 
-
 </mapper>
