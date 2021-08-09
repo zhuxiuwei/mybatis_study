@@ -35,5 +35,29 @@ public class MyTestPlus {
         }
     }
 
+    //第30讲：关联查询：查询员工，同时查关联的部门表。使用级联属性封装结果。
+    @Test
+    public void testGetEmpAndDept() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperPlus mapper = session.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmpAndDept(1);
+            System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='null', department=Department{id=1, departmentName='RD'}}
+        }finally {
+            session.close();
+        }
+    }
 
+    //第31讲：关联查询：查询员工，同时查关联的部门表。使用association封装关联对象。
+    @Test
+    public void testGetEmpAndDept2() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperPlus mapper = session.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmpAndDept2(1);
+            System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='null', department=Department{id=1, departmentName='RD'}}
+        }finally {
+            session.close();
+        }
+    }
 }

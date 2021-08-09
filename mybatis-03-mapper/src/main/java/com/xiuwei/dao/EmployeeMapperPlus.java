@@ -8,4 +8,10 @@ import java.util.Map;
 
 public interface EmployeeMapperPlus {
     Employee getEmpById(Integer id);
+
+    //第30讲：关联查询：查询员工，同时查关联的部门表。使用级联属性封装结果。
+    Employee getEmpAndDept(Integer id);
+
+    //第31讲：关联查询：查询员工，同时查关联的部门表。使用association封装关联对象
+    Employee getEmpAndDept2(Integer id);
 }
