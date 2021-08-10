@@ -14,4 +14,8 @@ public interface EmployeeMapperPlus {
 
     //第31讲：关联查询：查询员工，同时查关联的部门表。使用association封装关联对象
     Employee getEmpAndDept2(Integer id);
+
+    //第32讲：关联查询：查询员工，同时查关联的部门表。使用association 分步查询。
+    Employee getEmpByIdStep(Integer id);
+
 }

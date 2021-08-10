@@ -8,6 +8,10 @@
     <artifactId>mybatis_study</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+    <properties>
+        <log4j2.version>2.4.1</log4j2.version>
+        <slf4j.version>1.7.12</slf4j.version>
+    </properties>
     <modules>
         <module>mybatis-01-helloworld</module>
         <module>mybatis-02-config</module>
@@ -35,6 +39,49 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.47</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-slf4j-impl</artifactId>
+            <version>${log4j2.version}</version>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.logging.log4j</groupId>-->
+<!--            <artifactId>log4j-web</artifactId>-->
+<!--            <version>${log4j2.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.logging.log4j</groupId>-->
+<!--            <artifactId>log4j-web</artifactId>-->
+<!--            <version>${log4j2.version}</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; adapter log4j &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>log4j-over-slf4j</artifactId>-->
+<!--            <version>1.7.12</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash; adapter commons-logging &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>jcl-over-slf4j</artifactId>-->
+<!--            <version>1.7.12</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 </project>

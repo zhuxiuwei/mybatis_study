@@ -60,4 +60,17 @@ public class MyTestPlus {
             session.close();
         }
     }
+
+    //第32讲：关联查询：查询员工，同时查关联的部门表。使用association 实现分步查询。
+    @Test
+    public void testGetEmpByIdStep() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperPlus mapper = session.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmpByIdStep(1);
+            System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='null', department=Department{id=1, departmentName='RD'}}
+        }finally {
+            session.close();
+        }
+    }
 }
