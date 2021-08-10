@@ -27,8 +27,7 @@ public interface EmployeeMapper {
     Map<String, Object> getEmpByIdReturnMap(Integer id);
 
     //返回 多条记录 的map。 key: id， value: employee javebean
-    @MapKey("id")  //告诉Mybatis 封装map时，使用哪个属性 作为主键。
+    @MapKey("id")  //告诉Mybatis 封装map时，使用哪个属性作为map的key。
     Map<Integer, Employee> getEmpsByLikeLastNameReturnMap(@Param("lastName") String lastName);
-
 
 }
