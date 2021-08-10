@@ -73,4 +73,18 @@ public class MyTestPlus {
             session.close();
         }
     }
+
+    //第33讲：关联查询，分部查询：延迟加载。
+    @Test
+    public void testGetEmpByIdStepLazyLoad() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperPlus mapper = session.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmpByIdStep(1);
+            System.out.println(employee.getId());   //打印1。 执行这部时，不需要加载dept，debug信息里应该只执行一条sql:select * from tbl_employee where id=?
+            System.out.println(employee.getDepartment());   //打印dept对象。 执行这部时，会延迟加载dept, debug看到第二条SQL：select id, dept_name departmentName from tbl_dept where id=?
+        }finally {
+            session.close();
+        }
+    }
 }
