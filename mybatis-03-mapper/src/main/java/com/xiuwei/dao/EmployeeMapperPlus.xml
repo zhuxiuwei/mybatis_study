@@ -72,10 +72,10 @@
        -->
         <association property="department"
                      select="com.xiuwei.dao.DepartmentMapper.getDeptById"
-                     column="d_id">
+                     column="d_id">   <!-- 调用另一个 mapper的 查询-->
         </association>
     </resultMap>
-    <select id="getEmpByIdStep" resultMap="empByStep">
+    <select id="getEmpByIdStep" resultMap="empByStep">    <!-- 分布查询法相比第31讲的association用法，sql更简单，不用写关联。-->
         select * from tbl_employee where id=#{id}
     </select>
 
