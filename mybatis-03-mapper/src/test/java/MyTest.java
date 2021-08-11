@@ -105,7 +105,7 @@ public class MyTest {
         SqlSession session = getSession();
         try {
             EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
-            //一条map
+            //返回 一条记录 的map。 key: db列名， value: db的值
             Map<String, Object> res = mapper.getEmpByIdReturnMap(1);
             System.out.println(res);   //{gender=0, last_name=tom, id=1, email=tom@126.com}
 
