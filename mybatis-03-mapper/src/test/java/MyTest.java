@@ -111,7 +111,7 @@ public class MyTest {
 
             //返回 多条记录 的map。 key: id， value: employee javebean
             Map<Integer, Employee> res2 = mapper.getEmpsByLikeLastNameReturnMap("%jer%");   //注意还没有找到like的百分号，在mapper sql里写的正确方式，所以百分号写这了。
-            System.out.println(res2);   //{gender=0, last_name=tom, id=1, em
+            System.out.println(res2);   //{3=Employee{id=3, lastName='jerry_update3', gender='1', email='jerry_update@qq.com', department=null}, 5=Employee{id=5, lastName='jerry', gender='1', email='jerry@qq.com', department=null}, 6=Employee{id=6, lastName='jerry', gender='1', email='jerry@qq.com', department=null}}
         }finally {
             session.close();
         }
