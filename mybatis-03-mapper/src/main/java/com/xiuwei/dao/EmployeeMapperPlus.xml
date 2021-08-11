@@ -35,7 +35,7 @@
         where emp.id=#{id}
     </select>
 
-    <!-- （第31讲）使用association封装关联对象  -->
+    <!-- （第31讲）使用association封装关联对象（嵌套结果集的方式）  -->
     <resultMap id="myComplexEmp2" type="com.xiuwei.POJO.Employee">
         <id column="id" property="id"/>
         <result column="last_name" property="lastName"/>
@@ -55,7 +55,7 @@
         where emp.id=#{id}
     </select>
 
-    <!-- (第32讲) 使用association 分步查询。
+    <!-- (第32讲) 使用association（分步查询的方式）。
         1、 用员工id，查员工信息
         2、 用员工信息里的d_id，去部门表，查部门信息
         3、 把部门信息，设置到员工里

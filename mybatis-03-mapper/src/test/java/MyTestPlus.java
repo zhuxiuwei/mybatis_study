@@ -1,4 +1,6 @@
+import com.xiuwei.POJO.Department;
 import com.xiuwei.POJO.Employee;
+import com.xiuwei.dao.DepartmentMapper;
 import com.xiuwei.dao.EmployeeMapper;
 import com.xiuwei.dao.EmployeeMapperPlus;
 import org.apache.ibatis.io.Resources;
@@ -83,6 +85,20 @@ public class MyTestPlus {
             Employee employee = mapper.getEmpByIdStep(1);
             System.out.println(employee.getId());   //打印1。 执行这部时，不需要加载dept，debug信息里应该只执行一条sql:select * from tbl_employee where id=?
             System.out.println(employee.getDepartment());   //打印dept对象。 执行这部时，会延迟加载dept, debug看到第二条SQL：select id, dept_name departmentName from tbl_dept where id=?
+        }finally {
+            session.close();
+        }
+    }
+
+    //第34讲：关联查询，collection定义关联集合的封装 - 查部门时，把全部员工也查出来
+    @Test
+    public void testGetDeptByIdWithEmployees() throws IOException {
+        SqlSession session = getSession();
+        try {
+            DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
+            Department department = mapper.getDeptByIdWithEmployees(1);
+            System.out.println(department);             //Department{id=1, departmentName='RD'}
+            System.out.println(department.getEmps());   //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}, Employee{id=5, lastName='jerry', gender='1', email='jerry@qq.com', department=null}]
         }finally {
             session.close();
         }
