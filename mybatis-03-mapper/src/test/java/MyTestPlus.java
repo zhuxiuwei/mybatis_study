@@ -119,7 +119,7 @@ public class MyTestPlus {
 
     //第35讲：关联查询，collection定义关联集合的封装 - 查部门时，把全部员工也查出来(分步查询&延迟加载方式)
     @Test
-    public void testetDeptByIdWithEmployeesStep() throws IOException {
+    public void testGetDeptByIdWithEmployeesStep() throws IOException {
         SqlSession session = getSession();
         try {
             DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
