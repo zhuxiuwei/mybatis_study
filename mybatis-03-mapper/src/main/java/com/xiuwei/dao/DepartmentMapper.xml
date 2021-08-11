@@ -32,10 +32,18 @@
     <resultMap id="deptWithEmpsMapStep" type="com.xiuwei.POJO.Department">
         <id property="id" column="did"/>
         <result column="dept_name" property="departmentName" />
-        <!-- collection定义关联集合属性的封装规则。（分步骤查询方式） -->
-        <collection property="emps" select="com.xiuwei.dao.EmployeeMapperPlus.getEmpsByDeptId" column="id"/>
+        <!-- collection定义关联集合属性的封装规则。（分步骤查询方式）
+            （第36讲）fetchType： 是否延迟加载，此配置优先级高于全局配置。 fetchType="eager"： 不用延迟加载； fetchType="lazy"： 延迟加载
+            （第36讲）column="{did=id}" 是传多个列时的写法(map格式)，等价column="id"的传单列写法
+        -->
+        <collection
+                property="emps"
+                select="com.xiuwei.dao.EmployeeMapperPlus.getEmpsByDeptId"
+                column="{did=id}"
+                fetchType="lazy"
+        />
     </resultMap>
     <select id="getDeptByIdWithEmployeesStep" resultMap="deptWithEmpsMapStep">
-        select * from tbl_dept where id=#{id}
+        select id, dept_name from tbl_dept where id=#{id}
     </select>
 </mapper>
