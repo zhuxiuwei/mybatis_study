@@ -131,4 +131,22 @@ public class MyTestPlus {
             session.close();
         }
     }
+
+    //第37讲：discriminator：鉴别器
+    @Test
+    public void testetEmpByIdTestDiscriminator() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperPlus mapper = session.getMapper(EmployeeMapperPlus.class);
+            Employee employee = mapper.getEmpByIdTestDiscriminator(1);
+            //女生，结果中包含部门信息
+            System.out.println(employee);   //Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=Department{id=1, departmentName='RD'}}
+            //男生，结果中不包含部门信息，并且email=last_name值。
+            employee = mapper.getEmpByIdTestDiscriminator(3);   //Employee{id=3, lastName='jerry_update3', gender='1', email='jerry_update3', department=null}
+            System.out.println(employee);
+
+        }finally {
+            session.close();
+        }
+    }
 }

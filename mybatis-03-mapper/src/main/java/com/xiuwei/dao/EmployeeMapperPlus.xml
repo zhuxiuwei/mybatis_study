@@ -84,4 +84,37 @@
         select * from tbl_employee where d_id=#{did}
     </select>
 
+    <!-- 第37讲 discriminator：鉴别器。 了解，不太常用。
+        判断某列的值，然后根据其值，改变对象的封装行为。
+        如：如果gender为女，就查询部门信息， 否则不查询；
+            如果是男生，把email赋值成last_name。
+     -->
+    <resultMap id="discriminatorTestMap" type="com.xiuwei.POJO.Employee">
+        <id column="id" property="id"/>
+        <result column="last_name" property="lastName"/>
+        <result column="email" property="email"/>
+        <result column="gender" property="gender"/>
+        <!--
+            column: 制订判断哪列
+            javaType： column值的Java类型
+        -->
+        <discriminator javaType="string" column="gender">
+            <!-- 女生，查询部门信息。
+                 resultType: 指定要封装的对象的类型。 resultType/resultMap二选一不能少。
+                 下面的配置表示，如果是女生，把Employee对象的department属性封装出来 -->
+            <case value="0" resultType="com.xiuwei.POJO.Employee">
+                <association property="department"
+                             select="com.xiuwei.dao.DepartmentMapper.getDeptById"
+                             column="d_id">   <!-- 调用另一个 mapper的 查询-->
+                </association>
+            </case>
+            <case value="1" resultType="com.xiuwei.POJO.Employee">
+                <!-- 男生，把email赋值成last_name。-->
+                <result column="last_name" property="email"/>
+            </case>
+        </discriminator>
+    </resultMap>
+    <select id="getEmpByIdTestDiscriminator" resultMap="discriminatorTestMap">
+        select * from tbl_employee where id=#{id}
+    </select>
 </mapper>

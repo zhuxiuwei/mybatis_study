@@ -21,4 +21,7 @@ public interface EmployeeMapperPlus {
 
     //第35讲用到
     List<Employee> getEmpsByDeptId(Integer did);
+
+    //第37讲: discriminator：鉴别器
+    Employee getEmpByIdTestDiscriminator(Integer did);
 }
