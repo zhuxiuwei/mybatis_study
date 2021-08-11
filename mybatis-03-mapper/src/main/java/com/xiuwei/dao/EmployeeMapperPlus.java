@@ -4,6 +4,7 @@ import com.xiuwei.POJO.Employee;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
 import java.util.Map;
 
 public interface EmployeeMapperPlus {
@@ -18,4 +19,6 @@ public interface EmployeeMapperPlus {
     //第32讲：关联查询：查询员工，同时查关联的部门表。使用association 分步查询。
     Employee getEmpByIdStep(Integer id);
 
+    //第35讲: 增强版的查询，查部门时，把全部员工也查出来（分步骤查询&延迟加载方式）
+    List<Employee> getEmpsByDeptId(Integer did);
 }

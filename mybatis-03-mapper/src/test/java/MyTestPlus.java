@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MyTestPlus {
@@ -90,7 +91,7 @@ public class MyTestPlus {
         }
     }
 
-    //第34讲：关联查询，collection定义关联集合的封装 - 查部门时，把全部员工也查出来
+    //第34讲：关联查询，collection定义关联集合的封装 - 查部门时，把全部员工也查出来(嵌套查询方式)
     @Test
     public void testGetDeptByIdWithEmployees() throws IOException {
         SqlSession session = getSession();
@@ -98,6 +99,33 @@ public class MyTestPlus {
             DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
             Department department = mapper.getDeptByIdWithEmployees(1);
             System.out.println(department);             //Department{id=1, departmentName='RD'}
+            System.out.println(department.getEmps());   //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}, Employee{id=5, lastName='jerry', gender='1', email='jerry@qq.com', department=null}]
+        }finally {
+            session.close();
+        }
+    }
+
+    @Test
+    public void testGetEmpsByDeptId() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperPlus mapper = session.getMapper(EmployeeMapperPlus.class);
+            List<Employee> emps = mapper.getEmpsByDeptId(1);
+            System.out.println(emps);
+        }finally {
+            session.close();
+        }
+    }
+
+    //第35讲：关联查询，collection定义关联集合的封装 - 查部门时，把全部员工也查出来(分步查询&延迟加载方式)
+    @Test
+    public void testetDeptByIdWithEmployeesStep() throws IOException {
+        SqlSession session = getSession();
+        try {
+            DepartmentMapper mapper = session.getMapper(DepartmentMapper.class);
+            Department department = mapper.getDeptByIdWithEmployeesStep(1);
+            System.out.println(department.getDepartmentName());      //RD
+            //如果开启了懒加载，如果注释调下一行，上一行会只执行一个SQL。
             System.out.println(department.getEmps());   //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}, Employee{id=5, lastName='jerry', gender='1', email='jerry@qq.com', department=null}]
         }finally {
             session.close();
