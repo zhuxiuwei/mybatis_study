@@ -27,7 +27,7 @@ public class MyTest {
             List<Employee> employees = mapper.getEmpsByConditionIf(new Employee(1, "%to%", null, null));
             System.out.println(employees);  //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}]
             /**
-             * 观察Log里的SQL：select * from tbl_employee where id=? and last_name like ?
+             * 观察Log里真实执行的SQL：select * from tbl_employee where id=? and last_name like ?
              * 因为email和gender都是null, sql里就没包含这些字段。
             */
         }finally {

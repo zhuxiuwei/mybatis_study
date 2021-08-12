@@ -10,7 +10,7 @@
     • trim 字符串截取(where(封装查询条件), set(封装修改条件))
     • foreach 遍历集合
      -->
-    <!-- 查询条件employee里，携带了哪个查询条件，返回结果就带上这个字段的值 -->
+    <!-- if测试： 查询条件employee里，携带了哪个查询条件，返回结果就带上这个字段的值 -->
     <select id="getEmpsByConditionIf" resultType="com.xiuwei.POJO.Employee">
          select * from tbl_employee where
          <!-- test: 判断表达式OGNL
