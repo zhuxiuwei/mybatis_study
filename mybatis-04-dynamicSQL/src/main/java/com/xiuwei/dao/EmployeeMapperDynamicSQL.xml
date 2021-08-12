@@ -10,15 +10,16 @@
     • trim 字符串截取(where(封装查询条件), set(封装修改条件))
     • foreach 遍历集合
      -->
-    <!-- if测试： 查询条件employee里，携带了哪个查询条件，返回结果就带上这个字段的值 -->
+    <!-- #39 if测试： 查询条件employee里，携带了哪个查询条件，返回结果就带上这个字段的值 -->
     <select id="getEmpsByConditionIf" resultType="com.xiuwei.POJO.Employee">
-         select * from tbl_employee where 1=1
+         select * from tbl_employee where 1=1       <!-- 注意这个小技巧，加1=1是避免后面可能的拼接出错。如果没有1=1， 后面第一个参数也没有and开头，
+                                                    那么第一个参数为null时，sql会有语法错误：select * from tbl_employee where and .... -->
          <!-- test: 判断表达式OGNL
             OGNL的使用参考官方文档，或者PPT。 和JSP的EL表达式类似。
             从参数中取值进行判断
          -->
          <if test="id!=null">
-            and id=#{id}
+            and id=#{id}    <!-- 注意必须有and开头 -->
          </if>
         <if test="lastName!=null and lastName!=''">
             and last_name like #{lastName}
@@ -30,6 +31,26 @@
         <if test="gender==0 or gender==1">
             and gender=#{gender}
         </if>
+    </select>
+
+    <!-- #40 where测试： 用if的同时，用where标签，解决where 后面and/or拼接可能存在的问题。 -->
+    <select id="getEmpsByConditionIfUsingWhere" resultType="com.xiuwei.POJO.Employee">
+        select * from tbl_employee  <!-- 注意没有where 1=1了 -->
+        <where>
+            <if test="id!=null">
+                id=#{id}    <!-- 注意没有and开头 -->
+            </if>
+            <if test="lastName!=null and lastName!=''">
+                and last_name like #{lastName}
+            </if>
+            <if test="email!=null and email.trim()!=''">
+                and email=#{email}
+            </if>
+            <!-- ognl会进行字符串转换， 0 与 "0" 等效-->
+            <if test="gender==0 or gender==1">
+                and gender=#{gender}
+            </if>
+        </where>
     </select>
 
 </mapper>
