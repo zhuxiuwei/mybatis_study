@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="dbconfig.properties" />
+
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name="logImpl" value="STDOUT_LOGGING" />	<!-- 配置打印出debug sql -->
+		<setting name="lazyLoadingEnabled" value="true"/>	<!-- 配置是否延迟加载relations -->
+		<setting name="aggressiveLazyLoading" value="false"/>	<!-- 配置是否一次性加载出lazy loaded object的全部属性 -->
+	</settings>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}"/>
+				<property name="username" value="${jdbc.username}"/>
+				<property name="password" value="${jdbc.password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+
+	<mappers>
+		<!-- 批量注册 -->
+		<package name="com.xiuwei.dao"/>
+	</mappers>
+
+</configuration>
