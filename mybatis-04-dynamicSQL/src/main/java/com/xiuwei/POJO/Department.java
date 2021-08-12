@@ -1,4 +1,4 @@
-package xiuwei.POJO;
+package com.xiuwei.POJO;
 
 import java.util.List;
 

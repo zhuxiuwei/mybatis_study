@@ -8,7 +8,7 @@
         namespace: 命名空间，随便写。不一定是包名。
         #{id}: 从传过来的参数中去的id值
     -->
-    <select id="selectEmp" resultType="com.xiuwei.POJO.Employee">
+    <select id="selectEmp" resultType="com.Employee">
         <!-- 注意数据库是last_name， javaBean是lastName， 所以sql必须写别名，否则查不出来 -->
         select id, last_name as lastName, email, gender from tbl_employee where id=#{id}
     </select>

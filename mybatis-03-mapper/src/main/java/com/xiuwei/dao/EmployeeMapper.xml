@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiuwei.dao.EmployeeMapper">
-    <select id="getEmpById" resultType="com.xiuwei.POJO.Employee">
+    <select id="getEmpById" resultType="com.Employee">
         select * from tbl_employee where id=#{id}
     </select>
 
@@ -12,13 +12,13 @@
             useGeneratedKeys="true": mybatis使用statement.getGeneratedKeys()，获取自增主键值
             keyProperty:  mybatis获取自增主键值后， 把值赋给javabean哪个field
     -->
-    <insert id="addEmp" parameterType="com.xiuwei.POJO.Employee"
+    <insert id="addEmp" parameterType="com.Employee"
             useGeneratedKeys="true" keyProperty="id">
         insert into tbl_employee(last_name,gender,email)
         values (#{lastName},#{gender},#{email, jdbcType=NULL})
     </insert>
 
-    <update id="updateEmp" parameterType="com.xiuwei.POJO.Employee">
+    <update id="updateEmp" parameterType="com.Employee">
         update tbl_employee
         set  last_name=#{lastName},gender=#{gender},email=#{email}
         where id=#{id}
@@ -29,17 +29,17 @@
     </delete>
 
     <!-- 通过params取值，以及测试接口里的@param用法 -->
-    <select id="getEmpByParams" resultType="com.xiuwei.POJO.Employee">
+    <select id="getEmpByParams" resultType="com.Employee">
         select * from tbl_employee where id=#{id} and last_name=#{lName} and gender=${param3}
     </select>
 
     <!-- 参数是map时 -->
-    <select id="getEmpByMap" resultType="com.xiuwei.POJO.Employee">
+    <select id="getEmpByMap" resultType="com.Employee">
         select * from ${tableName} where id=#{id} and last_name=#{lName}
     </select>
 
     <!-- 参数是POJO时 -->
-    <select id="getEmpByPojo" resultType="com.xiuwei.POJO.Employee">
+    <select id="getEmpByPojo" resultType="com.Employee">
         select * from tbl_employee where id=#{id} and last_name=#{lastName}
     </select>
 
@@ -49,7 +49,7 @@
     </select>
 
     <!-- 返回 多条记录 的map。 key: id， value: employee javebean -->
-    <select id="getEmpsByLikeLastNameReturnMap" resultType="com.xiuwei.POJO.Employee">
+    <select id="getEmpsByLikeLastNameReturnMap" resultType="com.Employee">
         select * from tbl_employee where last_name like #{lastName}
     </select>
 

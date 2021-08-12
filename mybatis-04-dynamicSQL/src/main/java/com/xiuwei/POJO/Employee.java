@@ -1,4 +1,4 @@
-package xiuwei.POJO;
+package com.xiuwei.POJO;
 
 //@Alias("em")    //@Alias: 用于解决别名冲突问题。通过注解给类起别名。
 public class Employee {

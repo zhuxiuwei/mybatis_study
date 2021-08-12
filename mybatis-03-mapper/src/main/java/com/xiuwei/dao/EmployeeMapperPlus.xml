@@ -5,7 +5,7 @@
 <mapper namespace="com.xiuwei.dao.EmployeeMapperPlus">
 
     <!-- 自定义某个javabean的封装规则-->
-    <resultMap id="mySimpleEmp" type="com.xiuwei.POJO.Employee">
+    <resultMap id="mySimpleEmp" type="com.Employee">
         <!-- 定义主键列的封装规则。 column: 制订db里的列。  property: 制订javebean的属性
             id定义主键，底层会有优化。-->
         <id column="id" property="id" />
@@ -22,7 +22,7 @@
 
     <!-- 场景1： 查询员工信息，同时级联查询部门信息 -->
     <!-- （第30讲）使用级联属性，封装结果集 -->
-   <resultMap id="myComplexEmp" type="com.xiuwei.POJO.Employee">
+   <resultMap id="myComplexEmp" type="com.Employee">
        <id column="id" property="id"/>
        <result column="last_name" property="lastName"/>
        <result column="gender" property="gender"/>
@@ -36,15 +36,15 @@
     </select>
 
     <!-- （第31讲）使用association封装关联对象（嵌套结果集的方式）  -->
-    <resultMap id="myComplexEmp2" type="com.xiuwei.POJO.Employee">
+    <resultMap id="myComplexEmp2" type="com.Employee">
         <id column="id" property="id"/>
         <result column="last_name" property="lastName"/>
         <result column="gender" property="gender"/>
         <!-- association指定联合的javabean对象
             property="department" 指定哪个属性是联合的对象
-            javaType="com.xiuwei.POJO.Department"  联合对象的类型 【不可省略】
+            javaType="com.Department"  联合对象的类型 【不可省略】
        -->
-        <association property="department" javaType="com.xiuwei.POJO.Department">
+        <association property="department" javaType="com.Department">
             <id column="did" property="id"/>
             <result column="dept_name" property="departmentName"/>
         </association>
@@ -60,7 +60,7 @@
         2、 用员工信息里的d_id，去部门表，查部门信息
         3、 把部门信息，设置到员工里
     -->
-    <resultMap id="empByStep" type="com.xiuwei.POJO.Employee">
+    <resultMap id="empByStep" type="com.Employee">
         <id column="id" property="id"/>
         <result column="last_name" property="lastName"/>
         <result column="email" property="email"/>
@@ -80,7 +80,7 @@
     </select>
 
     <!-- 第35讲用到 -->
-    <select id="getEmpsByDeptId" resultType="com.xiuwei.POJO.Employee">
+    <select id="getEmpsByDeptId" resultType="com.Employee">
         select * from tbl_employee where d_id=#{did}
     </select>
 
@@ -89,7 +89,7 @@
         如：如果gender为女，就查询部门信息， 否则不查询；
             如果是男生，把email赋值成last_name。
      -->
-    <resultMap id="discriminatorTestMap" type="com.xiuwei.POJO.Employee">
+    <resultMap id="discriminatorTestMap" type="com.Employee">
         <id column="id" property="id"/>
         <result column="last_name" property="lastName"/>
         <result column="email" property="email"/>
@@ -102,13 +102,13 @@
             <!-- 女生，查询部门信息。
                  resultType: 指定要封装的对象的类型。 resultType/resultMap二选一不能少。
                  下面的配置表示，如果是女生，把Employee对象的department属性封装出来 -->
-            <case value="0" resultType="com.xiuwei.POJO.Employee">
+            <case value="0" resultType="com.Employee">
                 <association property="department"
                              select="com.xiuwei.dao.DepartmentMapper.getDeptById"
                              column="d_id">   <!-- 调用另一个 mapper的 查询-->
                 </association>
             </case>
-            <case value="1" resultType="com.xiuwei.POJO.Employee">
+            <case value="1" resultType="com.Employee">
                 <!-- 男生，把email赋值成last_name。-->
                 <result column="last_name" property="email"/>
             </case>

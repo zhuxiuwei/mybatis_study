@@ -16,7 +16,7 @@
 	<typeAliases>
 		<!--1. 给单独一个类起别名。默认别名：employee，类名(不区分大小写).
 			alias:指定新名 -->
-		<typeAlias type="com.xiuwei.POJO.Employee" alias="emp"/>
+		<typeAlias type="com.Employee" alias="emp"/>
 
 		<!-- 2. package: 为某个包下的类批量起别名（适合类很多时）
 			name: 为当前包和下面所有后代包都起一个默认别名（类名(不区分大小写)）
