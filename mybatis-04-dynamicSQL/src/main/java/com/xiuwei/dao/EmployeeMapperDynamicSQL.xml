@@ -12,13 +12,13 @@
      -->
     <!-- if测试： 查询条件employee里，携带了哪个查询条件，返回结果就带上这个字段的值 -->
     <select id="getEmpsByConditionIf" resultType="com.xiuwei.POJO.Employee">
-         select * from tbl_employee where
+         select * from tbl_employee where 1=1
          <!-- test: 判断表达式OGNL
             OGNL的使用参考官方文档，或者PPT。 和JSP的EL表达式类似。
             从参数中取值进行判断
          -->
          <if test="id!=null">
-             id=#{id}
+            and id=#{id}
          </if>
         <if test="lastName!=null and lastName!=''">
             and last_name like #{lastName}

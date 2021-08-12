@@ -24,7 +24,7 @@ public class MyTest {
         SqlSession session = getSession();
         try {
             EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
-            List<Employee> employees = mapper.getEmpsByConditionIf(new Employee(1, "%to%", null, null));
+            List<Employee> employees = mapper.getEmpsByConditionIf(new Employee(null, "%to%", null, null));
             System.out.println(employees);  //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}]
             /**
              * 观察Log里真实执行的SQL：select * from tbl_employee where id=? and last_name like ?
