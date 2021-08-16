@@ -10,4 +10,7 @@ public interface EmployeeMapperDynamicSQL {
 
     //#40： 用if的同时，用where标签，解决where 后面and/or拼接可能存在的问题。
     List<Employee>  getEmpsByConditionIfUsingWhere(Employee employee);
+
+    //#42：choose测试:如果有id就用ID查，如果有lastName就用lastName查.....二者只用一个
+    List<Employee>  getEmpsByConditionChoose(Employee employee);
 }

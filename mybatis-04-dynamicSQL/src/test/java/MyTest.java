@@ -44,10 +44,27 @@ public class MyTest {
             EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
             List<Employee> employees = mapper.getEmpsByConditionIfUsingWhere(new Employee(null, "%to%", null, null));
             System.out.println(employees);  //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}]
-            /**
-             * 观察Log里真实执行的SQL，是语法正确的：select * from tbl_employee WHERE last_name like ?
-             * 即使第一个参数(id)为空，也没有错误拼接成 select * from tbl_employee WHERE and last_name like ?
-             */
+        }finally {
+            session.close();
+        }
+    }
+
+    @Test
+    //#42：choose测试:如果有id就用ID查，如果有lastName就用lastName查.....二者只用一个
+    public void testGetEmpsByConditionChoose() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
+            List<Employee> employees = mapper.getEmpsByConditionChoose(new Employee(null, "%to%", null, null));
+            System.out.println(employees);  //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}]
+
+            //传了2个条件，只用id查
+            employees = mapper.getEmpsByConditionChoose(new Employee(3, "%to%", null, null));
+            System.out.println(employees);  //[Employee{id=3, lastName='jerry_update3', gender='1', email='jerry_update@qq.com', department=null}]
+
+            //不传条件，全查
+            employees = mapper.getEmpsByConditionChoose(new Employee(null, null, null, null));
+            System.out.println(employees);  //返回全部
         }finally {
             session.close();
         }
