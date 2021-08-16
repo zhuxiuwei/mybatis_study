@@ -73,4 +73,35 @@
             </choose>
         </where>
     </select>
+
+    <!-- #43  set与if结合的动态更新 - 传了哪列，就更新哪列，其他列不更新。(之前「mybatis-03-mapper」的'updateEmp'是全字段更新 -->
+    <update id="updateEmp" parameterType="com.xiuwei.POJO.Employee">
+        update tbl_employee
+            <set>    <!-- 用set的好处：即时最后gender没传参，最后的sql里 where前，也不会多个逗号。 -->
+                <if test="lastName!=null and lastName!=''">
+                    last_name=#{lastName},    <!-- 注意后面有逗号 -->
+                </if>
+                <if test="email!=null and email.trim()!=''">
+                    email=#{email},
+                </if>
+                <if test="gender==0 or gender==1">
+                    gender=#{gender}
+                </if>
+            </set>
+            <!-- 等价以下trim写法-->
+            <!--
+            <trim prefix="set" suffixOverrides=",">
+                <if test="lastName!=null and lastName!=''">
+                    last_name=#{lastName},
+                </if>
+                <if test="email!=null and email.trim()!=''">
+                    email=#{email},
+                </if>
+                <if test="gender==0 or gender==1">
+                    gender=#{gender}
+                </if>
+            </trim>
+            -->
+        where id=#{id}
+    </update>
 </mapper>

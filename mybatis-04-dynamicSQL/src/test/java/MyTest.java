@@ -69,4 +69,18 @@ public class MyTest {
             session.close();
         }
     }
+
+    @Test
+    //#43：set测试: set与if结合的动态更新 - 传了哪列，就更新哪列，其他列不更新。(之前「mybatis-03-mapper」的'updateEmp'是全字段更新
+    public void testUpdateEmp() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
+            //效果：只更新lastName。 email、gender都不更新。 而且sql不会拼错。
+            mapper.updateEmp(new Employee(6, "jerry222222", null, null));
+            session.commit();
+        }finally {
+            session.close();
+        }
+    }
 }

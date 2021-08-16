@@ -13,4 +13,7 @@ public interface EmployeeMapperDynamicSQL {
 
     //#42：choose测试:如果有id就用ID查，如果有lastName就用lastName查.....二者只用一个
     List<Employee>  getEmpsByConditionChoose(Employee employee);
+
+    //#43: set与if结合的动态更新 - 传了哪列，就更新哪列，其他列不更新。(之前「mybatis-03-mapper」的'updateEmp'是全字段更新
+    void updateEmp(Employee employee);
 }
