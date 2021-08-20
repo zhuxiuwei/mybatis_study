@@ -1,3 +1,4 @@
+import com.xiuwei.POJO.Department;
 import com.xiuwei.POJO.Employee;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -8,6 +9,7 @@ import com.xiuwei.dao.EmployeeMapperDynamicSQL;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -94,6 +96,31 @@ public class MyTest {
             List<Employee> employees = mapper.getEmpsByConditionForeach(Arrays.asList(1, 2, 3, 4)); //效果：根据传入的list，拼SQL
             //观察sql是正确的： select * from tbl_employee where id in( ? , ? , ? , ? ) ==> Parameters: 1(Integer), 2(Integer), 3(Integer), 4(Integer)
             System.out.println(employees);  //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}, Employee{id=3, lastName='jerry_update3', gender='1', email='jerry_update@qq.com', department=null}]
+        }finally {
+            session.close();
+        }
+    }
+
+    @Test
+    //#45: foreach批量添加
+    public void testAddEmps() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
+            List<Employee> emps = new ArrayList<Employee>();
+
+            Department d1 = new Department(1, null);    //部门id必须在db存在，否则报：Cannot add or update a child row: a foreign key constraint fails (`mybatis`.`tbl_employee`, CONSTRAINT `fk_emp_dept` FOREIGN KEY (`d_id`) REFERENCES `tbl_dept` (`id`))
+
+            Employee e1 = new Employee("batchAdd1", "0", "xx@x.com");
+            e1.setDepartment(d1);
+
+            Employee e2 = new Employee("batchAdd2", "0", "xx@x.com");
+            e2.setDepartment(d1);
+
+            emps.add(e1);
+            emps.add(e2);
+            mapper.addEmps(emps);
+            session.commit();   //验证确实能写到mysql
         }finally {
             session.close();
         }

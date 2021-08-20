@@ -26,6 +26,13 @@ public class Employee {
         this.department = department;
     }
 
+    public Employee(String lastName, String gender, String email) {
+        this.lastName = lastName;
+        this.gender = gender;
+        this.email = email;
+        this.department = department;
+    }
+
     public Integer getId() {
         return id;
     }

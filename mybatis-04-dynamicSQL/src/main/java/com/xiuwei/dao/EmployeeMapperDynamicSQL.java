@@ -21,4 +21,7 @@ public interface EmployeeMapperDynamicSQL {
     //#44: foreach循环遍历集合，拼SQL
     List<Employee>  getEmpsByConditionForeach(@Param("ids") List<Integer> ids);
 
+    //#45: foreach批量添加
+    void  addEmps(@Param("emps") List<Employee> emps);
+
 }

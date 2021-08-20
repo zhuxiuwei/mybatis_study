@@ -124,4 +124,16 @@
             #{id_in_list}
         </foreach>
     </select>
+
+    <!-- #45 foreach批量添加
+        用mysql支持的语法(oracle不支持，#46讲。)：INSERT INTO tbl_employee (last_name, gender, email, d_id) VALUES  (?,?,?,?) , (?,?,?,?)
+    -->
+    <insert id="addEmps">
+        INSERT INTO tbl_employee (last_name, gender, email, d_id)
+        VALUES
+        <foreach collection="emps" item="emp" separator=",">
+            (#{emp.lastName},#{emp.gender},#{emp.email},#{emp.department.id})
+        </foreach>
+    </insert>
+
 </mapper>
