@@ -8,6 +8,7 @@ import com.xiuwei.dao.EmployeeMapperDynamicSQL;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
 import java.util.List;
 
 public class MyTest {
@@ -79,6 +80,20 @@ public class MyTest {
             //效果：只更新lastName。 email、gender都不更新。 而且sql不会拼错。
             mapper.updateEmp(new Employee(6, "jerry222222", null, null));
             session.commit();
+        }finally {
+            session.close();
+        }
+    }
+
+    @Test
+    //#44: foreach循环遍历集合，拼SQL
+    public void testGetEmpsByConditionForeach() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
+            List<Employee> employees = mapper.getEmpsByConditionForeach(Arrays.asList(1, 2, 3, 4)); //效果：根据传入的list，拼SQL
+            //观察sql是正确的： select * from tbl_employee where id in( ? , ? , ? , ? ) ==> Parameters: 1(Integer), 2(Integer), 3(Integer), 4(Integer)
+            System.out.println(employees);  //[Employee{id=1, lastName='tom', gender='0', email='tom@126.com', department=null}, Employee{id=3, lastName='jerry_update3', gender='1', email='jerry_update@qq.com', department=null}]
         }finally {
             session.close();
         }

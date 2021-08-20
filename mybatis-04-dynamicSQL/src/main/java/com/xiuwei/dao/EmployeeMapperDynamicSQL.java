@@ -1,6 +1,7 @@
 package com.xiuwei.dao;
 
 import com.xiuwei.POJO.Employee;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface EmployeeMapperDynamicSQL {
 
     //#43: set与if结合的动态更新 - 传了哪列，就更新哪列，其他列不更新。(之前「mybatis-03-mapper」的'updateEmp'是全字段更新
     void updateEmp(Employee employee);
+
+    //#44: foreach循环遍历集合，拼SQL
+    List<Employee>  getEmpsByConditionForeach(@Param("ids") List<Integer> ids);
+
 }
