@@ -125,4 +125,17 @@ public class MyTest {
             session.close();
         }
     }
+
+    @Test
+    //#48: 内部参数 _parameter _databaseId
+    public void testGetEmpsTestInnerParameter() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
+            List<Employee> res = mapper.getEmpsTestInnerParameter(null);
+            System.out.printf("res");
+        }finally {
+            session.close();
+        }
+    }
 }

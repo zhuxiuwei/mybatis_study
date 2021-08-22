@@ -24,4 +24,7 @@ public interface EmployeeMapperDynamicSQL {
     //#45: foreach批量添加
     void  addEmps(@Param("emps") List<Employee> emps);
 
+    //#48: 内部参数 _parameter _databaseId
+    List<Employee>  getEmpsTestInnerParameter(Employee employee);
+
 }
