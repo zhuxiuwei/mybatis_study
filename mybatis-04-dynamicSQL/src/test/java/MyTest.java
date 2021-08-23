@@ -164,7 +164,7 @@ public class MyTest {
         SqlSession session = getSession();
         try {
             EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
-            mapper.addEmpTestSqlAndInclude("lname", "1", "xx@123.com","3");
+            mapper.addEmpTestSqlAndInclude("lname", "1", "xx@123.com","3"); //验证确实插入了
             session.commit();
         }finally {
             session.close();    //所有名字包含batchAdd的记录
