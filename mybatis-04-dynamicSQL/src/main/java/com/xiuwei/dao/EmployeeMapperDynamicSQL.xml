@@ -153,4 +153,13 @@
         </if>
     </select>
 
+
+    <!-- 49: 测试bind传参 - 利用bind传参，解决Like查询时，#{}不能带百分号的问题。 -->
+    <select id="getEmpByNameLike_testBind" resultType="com.xiuwei.POJO.Employee">
+        <bind name="lastNameLike" value="'%'+lName+'%'"/>
+        select * from tbl_employee where last_name like #{lastNameLike}
+        <!-- 方式二： '${}' 方式 可以拼百分号，就是有安全问题。-->
+        <!-- select * from tbl_employee where last_name like '%${lName}%' -->
+    </select>
+
 </mapper>

@@ -27,4 +27,6 @@ public interface EmployeeMapperDynamicSQL {
     //#48: 内部参数 _parameter _databaseId - 如果参数employee不为空，就用其lastName属性查询。
     List<Employee>  getEmpsTestInnerParameter(Employee employee);
 
+    //#49: 测试bind传参 - 利用bind传参，解决Like查询时，#{}不能带百分号的问题。
+    List<Employee>  getEmpByNameLike_testBind(@Param("lName") String lastName);
 }

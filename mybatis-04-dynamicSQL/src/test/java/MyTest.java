@@ -144,4 +144,17 @@ public class MyTest {
             session.close();
         }
     }
+
+    @Test
+    //#49: 测试bind传参 - 利用bind传参，解决Like查询时，#{}不能带百分号的问题。
+    public void testGetEmpByNameLike_testBind() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
+            List<Employee> res = mapper.getEmpByNameLike_testBind("batchAdd");  //不用写百分号了。（不过作者建议like查询，还是在传参时加百分号即可。）
+            System.out.println(res);
+        }finally {
+            session.close();    //所有名字包含batchAdd的记录
+        }
+    }
 }
