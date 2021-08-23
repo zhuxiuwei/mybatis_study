@@ -29,4 +29,10 @@ public interface EmployeeMapperDynamicSQL {
 
     //#49: 测试bind传参 - 利用bind传参，解决Like查询时，#{}不能带百分号的问题。
     List<Employee>  getEmpByNameLike_testBind(@Param("lName") String lastName);
+
+    //#50: 利用sql标签，抽取可复用的sql片段，方便复用。
+    void addEmpTestSqlAndInclude(@Param("lastName") String lastName,
+                                 @Param("gender") String gender,
+                                 @Param("email") String email,
+                                 @Param("departmentId") String departmentId);
 }

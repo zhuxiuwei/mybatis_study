@@ -157,4 +157,17 @@ public class MyTest {
             session.close();    //所有名字包含batchAdd的记录
         }
     }
+
+    @Test
+    //#50: 测试 利用sql标签，抽取可复用的sql片段，方便复用。
+    public void testAddEmpTestSqlAndInclude() throws IOException {
+        SqlSession session = getSession();
+        try {
+            EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
+            mapper.addEmpTestSqlAndInclude("lname", "1", "xx@123.com","3");
+            session.commit();
+        }finally {
+            session.close();    //所有名字包含batchAdd的记录
+        }
+    }
 }
