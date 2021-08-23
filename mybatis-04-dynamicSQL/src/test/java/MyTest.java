@@ -127,13 +127,19 @@ public class MyTest {
     }
 
     @Test
-    //#48: 内部参数 _parameter _databaseId
+    //#48: 内部参数 _parameter _databaseId - 如果参数employee不为空，就用其lastName属性查询。
     public void testGetEmpsTestInnerParameter() throws IOException {
         SqlSession session = getSession();
         try {
             EmployeeMapperDynamicSQL mapper = session.getMapper(EmployeeMapperDynamicSQL.class);
-            List<Employee> res = mapper.getEmpsTestInnerParameter(null);
-            System.out.printf("res");
+            Employee emp = new Employee();
+            emp.setLastName("tom");
+
+            List<Employee> res = mapper.getEmpsTestInnerParameter(emp);
+            System.out.println(res);    //只打印last_name=tom的。      SQL： select * from tbl_employee where last_name=?
+
+            List<Employee> res2 = mapper.getEmpsTestInnerParameter(null);
+            System.out.println(res2);   //打印全部的      SQL: select * from tbl_employee
         }finally {
             session.close();
         }

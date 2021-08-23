@@ -136,12 +136,17 @@
         </foreach>
     </insert>
 
-    <!-- #48 内部参数 _parameter _databaseId -->
+    <!-- #48 内部参数 _parameter _databaseId
+        如果参数employee不为空，就用其lastName属性查询。
+    -->
     <select id="getEmpsTestInnerParameter" resultType="com.xiuwei.POJO.Employee">
         <!-- 直接用_databaseId标签，选择数据库类型，不用在<select>标签里写databaseId来区分DB类型了（2个bd，select需要写两次）。
              需要 mybatis-config.xml 里 <databaseIdProvider>标签。-->
-        <if test="_databaseId=='mysql'">
+        <if test="_databaseId=='mysql_db'">
             select * from tbl_employee
+            <if test="_parameter!=null">    <!-- 用_parameter来表示传入的参数！！！ -->
+                where last_name=#{_parameter.lastName}
+            </if>
         </if>
         <if test="_databaseId=='oracle'">
             select * from oracle_tbl_name

@@ -24,7 +24,7 @@ public interface EmployeeMapperDynamicSQL {
     //#45: foreach批量添加
     void  addEmps(@Param("emps") List<Employee> emps);
 
-    //#48: 内部参数 _parameter _databaseId
+    //#48: 内部参数 _parameter _databaseId - 如果参数employee不为空，就用其lastName属性查询。
     List<Employee>  getEmpsTestInnerParameter(Employee employee);
 
 }
