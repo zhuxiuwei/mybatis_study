@@ -10,6 +10,7 @@
 		<setting name="logImpl" value="STDOUT_LOGGING" />	<!-- 配置打印出debug sql -->
 		<setting name="lazyLoadingEnabled" value="true"/>	<!-- 配置是否延迟加载relations -->
 		<setting name="aggressiveLazyLoading" value="false"/>	<!-- 配置是否一次性加载出lazy loaded object的全部属性 -->
+		<setting name="cacheEnabled" value="true"/> 	<!-- 开启二级缓存，默认好像就是开启了。 -->
 	</settings>
 
 	<environments default="development">
