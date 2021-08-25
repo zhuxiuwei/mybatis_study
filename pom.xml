@@ -17,6 +17,7 @@
         <module>mybatis-02-config</module>
         <module>mybatis-03-mapper</module>
         <module>mybatis-04-dynamicSQL</module>
+        <module>mybatis-05-cache</module>
     </modules>
 
     <dependencies>
