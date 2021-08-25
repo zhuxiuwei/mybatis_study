@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiuwei.dao.EmployeeMapper">
+    <!-- 开启二级缓存 -->
     <cache></cache>
     <!--
         第一节，helloWorld。 此方式不如第二节「接口式编程（EmployeeMapper2.xml）」

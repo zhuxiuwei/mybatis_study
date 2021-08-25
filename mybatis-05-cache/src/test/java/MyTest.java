@@ -29,11 +29,6 @@ public class MyTest {
             System.out.println(employee);
 
             System.out.println("--------------------------");
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             Employee employee2 = mapper.getEmpById(1);
             System.out.println(employee2);  //从后面的log看，sql一共只执行过一次，说明第二次查的缓存。
             System.out.println(employee == employee2);  //true。 两个对象相等。
