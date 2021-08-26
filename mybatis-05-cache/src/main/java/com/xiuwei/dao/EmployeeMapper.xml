@@ -3,15 +3,29 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiuwei.dao.EmployeeMapper">
-    <!-- 开启二级缓存 -->
-    <cache></cache>
-    <!--
-        第一节，helloWorld。 此方式不如第二节「接口式编程（EmployeeMapper2.xml）」
-        namespace: 命名空间，随便写。不一定是包名。
-        #{id}: 从传过来的参数中去的id值
+    <!-- 开启二级缓存
+        eviction: 缓存的回收策略
+            • LRU – 最近最少使用的：移除最长时间不被使用的对象。
+            • FIFO – 先进先出：按对象进入缓存的顺序来移除它们。
+            • SOFT – 软引用：移除基于垃圾回收器状态和软引用规则的对象。
+            • WEAK – 弱引用：更积极地移除基于垃圾收集器状态和弱引用规则的对象。
+            • 默认的是 LRU。
+        flushInterval：缓存刷新间隔。
+            缓存多久清空一次，默认不清空。单位毫秒。
+        readOnly： 是否只读。
+            true：mybatis认为，所有从缓存中获取数据的操作都是只读操作，不会修改。mybatis会给所有调用者返回缓存对象的相同实例。 因此这些对象不能被修改。这提供了很重要的性能优势。
+            false：mybatis认为缓存中的数据可能被修改。会返回缓存对象的拷贝（通过序列化）。这会慢一些，但是安全，因此默认是 false。
+        size: 缓存元素个数
+        type: 指定自定义缓存类名。可以自己实现mybatis的cache接口。
+
     -->
+    <cache eviction="FIFO" flushInterval="60000" readOnly="false" size="1024" />
+
     <select id="getEmpById" resultType="com.xiuwei.POJO.Employee">
-        <!-- 注意数据库是last_name， javaBean是lastName， 所以sql必须写别名，否则查不出来 -->
+        select id, last_name as lastName, email, gender from tbl_employee where id=#{id}
+    </select>
+    <!-- sql和getEmpById一样，测试是否会复用一级缓存。 结论： 不会 -->
+    <select id="getEmpById2" resultType="com.xiuwei.POJO.Employee">
         select id, last_name as lastName, email, gender from tbl_employee where id=#{id}
     </select>
 </mapper>
