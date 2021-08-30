@@ -63,15 +63,19 @@ public class MyTest {
             Employee employee = mapper.getEmpById(1);
             System.out.println(employee);
             /**
-             * 必须关闭或提交session，数据才会放入二级缓存。所以必须执行下commit/close，二级缓存才会生效。
+             * 必须关闭或提交session，数据才会放入  二级缓存。所以必须执行下commit/close，二级缓存才会生效。
              */
             session.commit();   //session.close(); 也行
 
-            Thread.sleep(6000); //在sleep阶段，可以尝试手工修改id=1的数据。下面第二次查询走缓存，依然读取到的是旧数据。
-
-            System.out.println("===================");
+//            Thread.sleep(6000); //在sleep阶段，可以尝试手工修改id=1的数据。下面第二次查询走缓存，依然读取到的是旧数据。
             EmployeeMapper mapper2 = session2.getMapper(EmployeeMapper.class);
+
+//            System.out.println("==========now insert =========");     //测试flushCache=true/false时，对一/二级缓存的影响。
+//            mapper2.addEmp(new Employee(null, "jerry", "1", "jerry@qq.com"));
+
+            System.out.println("==========now select again=========");
             Employee employee2 = mapper2.getEmpById(1);
+
             /**
              * 从log看，sql只执行了一次。
              * 然后会有： Cache Hit Ratio [com.xiuwei.dao.EmployeeMapper]: 0.5    <--- 缓存命中率50%

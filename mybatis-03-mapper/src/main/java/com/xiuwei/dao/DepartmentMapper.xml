@@ -3,18 +3,18 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.xiuwei.dao.DepartmentMapper">
-    <select id="getDeptById" resultType="com.Department">
+    <select id="getDeptById" resultType="com.xiuwei.POJO.Department">
         select id, dept_name departmentName from tbl_dept where id=#{id}
     </select>
 
     <!-- （第34讲）增强版的查询，查部门时，把全部员工也查出来（嵌套结果集的方式） -->
-    <resultMap id="deptWithEmpsMap" type="com.Department">
+    <resultMap id="deptWithEmpsMap" type="com.xiuwei.POJO.Department">
         <id property="id" column="did"/>
         <result column="dept_name" property="departmentName" />
         <!-- collection定义关联集合属性的封装规则。（嵌套结果集的方式）
             ofType: 集合里元素的类型。 不知道为啥不能用javaType。
         -->
-        <collection property="emps" ofType="com.Employee">
+        <collection property="emps" ofType="com.xiuwei.POJO.Employee">
             <id property="id" column="eid" />
             <result column="last_name" property="lastName"/>
             <result column="gender" property="gender"/>
@@ -29,7 +29,7 @@
     </select>
 
     <!-- （第35讲）增强版的查询，查部门时，把全部员工也查出来（分步骤查询&延迟加载方式） -->
-    <resultMap id="deptWithEmpsMapStep" type="com.Department">
+    <resultMap id="deptWithEmpsMapStep" type="com.xiuwei.POJO.Department">
         <id property="id" column="did"/>
         <result column="dept_name" property="departmentName" />
         <!-- collection定义关联集合属性的封装规则。（分步骤查询方式）
