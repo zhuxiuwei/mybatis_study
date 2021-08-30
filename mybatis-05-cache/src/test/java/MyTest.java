@@ -18,6 +18,12 @@ public class MyTest {
         return sessionFactory.openSession();
     }
 
+    private SqlSessionFactory getSessionFactory() throws IOException {
+        String resources = "mybatis-config.xml";
+        InputStream in = Resources.getResourceAsStream(resources);
+        return new SqlSessionFactoryBuilder().build(in);
+    }
+
     //#52 体验一级缓存
     @Test
     public void test1stLevelCache() throws IOException {
@@ -42,5 +48,42 @@ public class MyTest {
         }
     }
 
+    //55 测试二级缓存
+    @Test
+    public void test2ndLevelCache() throws IOException {
+        /**
+         * 注意必须从同一个SqlSessionFactory，创建出来的2个session，才能共享2级缓存
+         * 如果是getSession()生成的2个session，是通过不同的sqlSessionFactory创建的，就不能共享2级缓存
+         * */
+        SqlSessionFactory sessionFactory = getSessionFactory();
+        SqlSession session = sessionFactory.openSession();
+        SqlSession session2 = sessionFactory.openSession();
+        try{
+            EmployeeMapper mapper = session.getMapper(EmployeeMapper.class);
+            Employee employee = mapper.getEmpById(1);
+            System.out.println(employee);
+            /**
+             * 必须关闭或提交session，数据才会放入二级缓存。所以必须执行下commit/close，二级缓存才会生效。
+             */
+            session.commit();   //session.close(); 也行
+
+            Thread.sleep(6000); //在sleep阶段，可以尝试手工修改id=1的数据。下面第二次查询走缓存，依然读取到的是旧数据。
+
+            System.out.println("===================");
+            EmployeeMapper mapper2 = session2.getMapper(EmployeeMapper.class);
+            Employee employee2 = mapper2.getEmpById(1);
+            /**
+             * 从log看，sql只执行了一次。
+             * 然后会有： Cache Hit Ratio [com.xiuwei.dao.EmployeeMapper]: 0.5    <--- 缓存命中率50%
+             */
+            System.out.println(employee2);
+            System.out.println(employee == employee2);  //不知道为啥，复用缓存后，这里也是false。
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            session.close();
+            session2.close();
+        }
+    }
 
 }
