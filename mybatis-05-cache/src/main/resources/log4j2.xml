@@ -3,7 +3,7 @@
 ALL -->
 <!--Configuration 后面的 status 用于设置 log4j2 自身内部的信息输出，可以不设置，
 当设置成 trace 时，可以看到 log4j2 内部各种详细输出-->
-<configuration status="INFO">
+<configuration status="DEBUG">
     <!--先定义所有的 appender-->
     <appenders>
         <!--输出日志信息到控制台-->
