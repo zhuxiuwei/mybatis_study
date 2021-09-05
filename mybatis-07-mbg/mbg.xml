@@ -5,9 +5,11 @@
 
 <!-- 关于xml标签的解释，可以看：http://mybatis.org/generator/configreference/xmlconfig.html-->
 <generatorConfiguration>
-    <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />
-
-    <context id="DB2Tables" targetRuntime="MyBatis3Simple">
+    <!--
+		targetRuntime="MyBatis3Simple":生成简单版的CRUD
+		MyBatis3:豪华版
+	 -->
+    <context id="mysqlTables" targetRuntime="MyBatis3Simple">
         <!-- jdbcConnection：指定数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8&amp;useUnicode=true&amp;useSSL=false"
@@ -22,10 +24,10 @@
 
         <!-- http://mybatis.org/generator/configreference/javaModelGenerator.html
             指定javabean的生成策略
-            targetProject： 目标包名
-            targetProject: 目标工程
+            targetPackage： 目标包名
+            targetProject: 目标工程。注意目录必须提前建好。
         -->
-        <javaModelGenerator targetPackage="com.xiuwei.POJO" targetProject=".\src">
+        <javaModelGenerator targetPackage="com.xiuwei.POJO" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
@@ -33,14 +35,14 @@
         <!-- http://mybatis.org/generator/configreference/sqlMapGenerator.html
             sql映射生成策略
         -->
-        <sqlMapGenerator targetPackage="com.xiuwei.dao"  targetProject=".\src">
+        <sqlMapGenerator targetPackage="com.xiuwei.dao"  targetProject="./src/main/java">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
 
         <!-- http://mybatis.org/generator/configreference/javaClientGenerator.html
             配置java mapper接口
         -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xiuwei.dao"  targetProject=".\src">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xiuwei.dao"  targetProject="./src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
 
