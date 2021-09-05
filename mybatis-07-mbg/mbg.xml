@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<!-- 关于xml标签的解释，可以看：http://mybatis.org/generator/configreference/xmlconfig.html-->
+<generatorConfiguration>
+    <classPathEntry location="/Program Files/IBM/SQLLIB/java/db2java.zip" />
+
+    <context id="DB2Tables" targetRuntime="MyBatis3Simple">
+        <!-- jdbcConnection：指定数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8&amp;useUnicode=true&amp;useSSL=false"
+                        userId="root"
+                        password="admin">
+        </jdbcConnection>
+
+         <!-- http://mybatis.org/generator/configreference/javaTypeResolver.html -->
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- http://mybatis.org/generator/configreference/javaModelGenerator.html
+            指定javabean的生成策略
+            targetProject： 目标包名
+            targetProject: 目标工程
+        -->
+        <javaModelGenerator targetPackage="com.xiuwei.POJO" targetProject=".\src">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!-- http://mybatis.org/generator/configreference/sqlMapGenerator.html
+            sql映射生成策略
+        -->
+        <sqlMapGenerator targetPackage="com.xiuwei.dao"  targetProject=".\src">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!-- http://mybatis.org/generator/configreference/javaClientGenerator.html
+            配置java mapper接口
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xiuwei.dao"  targetProject=".\src">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!-- 指定逆向分析哪些表 -->
+        <table  tableName="tbl_dept" domainObjectName="Department"/>
+        <table  tableName="tbl_employee" domainObjectName="Employee" />
+
+    </context>
+</generatorConfiguration>
