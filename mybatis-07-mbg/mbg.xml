@@ -9,7 +9,7 @@
 		targetRuntime="MyBatis3Simple":生成简单版的CRUD
 		MyBatis3:豪华版
 	 -->
-    <context id="mysqlTables" targetRuntime="MyBatis3Simple">
+    <context id="mysqlTables" targetRuntime="MyBatis3">
         <!-- jdbcConnection：指定数据库连接 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/mybatis?characterEncoding=UTF-8&amp;useUnicode=true&amp;useSSL=false"
